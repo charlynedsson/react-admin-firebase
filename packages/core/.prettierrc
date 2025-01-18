@@ -1,0 +1,9 @@
+{
+  "singleQuote": true,
+  "tabWidth": 2,
+  "organizeImportsSkipDestructiveCodeActions": true,
+  "trailingComma": "es5",
+  "plugins": [
+    "prettier-plugin-organize-imports"
+  ]
+}
