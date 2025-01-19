@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { translateDocToFirestore } from '../src/misc';
 
 describe('file-parser tests', () => {

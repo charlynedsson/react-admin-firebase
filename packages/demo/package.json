@@ -10,7 +10,7 @@
     "format": "prettier --write ./src"
   },
   "dependencies": {
-    "@cnedsson/react-admin-firebase": "file:../core/cnedsson-react-admin-firebase-5.0.0.tgz",
+    "@cnedsson/react-admin-firebase": "^5.0.1",
     "firebase": "^11.2.0",
     "react": "^18.2.0",
     "react-admin": "^5.4.4",

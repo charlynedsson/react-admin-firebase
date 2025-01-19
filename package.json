@@ -9,10 +9,14 @@
     "README.md"
   ],
   "scripts": {
-    "start-emulator": "firebase emulators:start --project react-admin-firebase"
+    "start-emulators": "firebase emulators:start --project react-admin-firebase",
+    "start-demo": "npm run dev -w packages/demo",
+    "test": "npm test -w packages/core",
+    "watch": "npm run dev -w packages/demo && npm run watch -w packages/core"
   },
   "devDependencies": {
-    "firebase-tools": "^13.x"
+    "firebase-tools": "^13.x",
+    "typescript": "^5.7.3"
   },
   "workspaces": [
     "packages/*"

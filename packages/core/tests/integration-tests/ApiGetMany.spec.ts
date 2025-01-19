@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { doc, setDoc } from 'firebase/firestore';
 import { FireStore } from '../../src/misc/firebase-models';
 import { GetMany } from '../../src/providers/queries';

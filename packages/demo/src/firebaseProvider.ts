@@ -1,18 +1,16 @@
 import { initializeApp } from "firebase/app";
-import { FirebaseAuthProvider, FirebaseDataProvider } from "@cnedsson/react-admin-firebase/src";
+import { FirebaseAuthProvider, FirebaseDataProvider } from "@cnedsson/react-admin-firebase";
 import { connectAuthEmulator, getAuth } from "firebase/auth";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-    apiKey: "fake-api-key",
-    authDomain: "localhost",
+    apiKey: "demo-api-key",
     projectId: "react-admin-firebase",
     appId: "demo",
-    storageBucket: "react-admin-firebase.appspot.com",
 };
 
-const firebase = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const db = getFirestore();

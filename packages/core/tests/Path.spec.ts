@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { getAbsolutePath } from '../src/misc';
 
 test('path test 1', () => {

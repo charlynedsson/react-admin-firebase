@@ -1,13 +1,11 @@
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import firebase from 'firebase/compat/app';
-import { collection, doc, getDocs, getFirestore, setDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import { RAFirebaseOptions } from '../../../src';
 import { IFirestoreLogger } from '../../../src/misc';
 import { FireStore } from '../../../src/misc/firebase-models';
 import { FireClient, IFirebaseWrapper } from '../../../src/providers/database';
 import { FirebaseWrapperStub } from './FirebaseWrapperStub';
-import { get } from 'lodash';
-import { getStorage } from 'firebase/storage';
 
 function makeSafeId(projectId: string): string {
   return projectId.split(' ').join('').toLowerCase();
@@ -35,8 +33,8 @@ export async function initFireWrapper(
     firestore: { host: '127.0.0.1', port: 8080 },
     storage: { host: '127.0.0.1', port: 9199 },
   };
-  const environment = await initializeTestEnvironment(testOptions);  
- 
+  const environment = await initializeTestEnvironment(testOptions);
+
   const context = environment.unauthenticatedContext();
 
   return new FirebaseWrapperStub(

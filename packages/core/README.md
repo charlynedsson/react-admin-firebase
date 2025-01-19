@@ -1,25 +1,26 @@
-# react-admin-firebase
+# @cnedsson/react-admin-firebase
 <!-- [START badges] -->
-[![NPM Version](https://img.shields.io/npm/v/react-admin-firebase.svg)](https://www.npmjs.com/package/react-admin-firebase) 
-[![License](https://img.shields.io/npm/l/react-admin-firebase.svg)](https://github.com/benwinding/react-admin-firebase/blob/master/LICENSE) 
-[![Downloads/week](https://img.shields.io/npm/dm/react-admin-firebase.svg)](https://www.npmjs.com/package/react-admin-firebase) 
-[![Github Issues](https://img.shields.io/github/issues/benwinding/react-admin-firebase.svg)](https://github.com/benwinding/react-admin-firebase)
+[![NPM Version](https://img.shields.io/npm/v/@cnedsson/react-admin-firebase.svg)](https://www.npmjs.com/package/@cnedsson/react-admin-firebase) 
+[![License](https://img.shields.io/npm/l/@cnedsson/react-admin-firebase.svg)](https://github.com/charlynedsson/react-admin-firebase/blob/master/packages/core/LICENSE) 
+[![Downloads/week](https://img.shields.io/npm/dm/@cnedsson/react-admin-firebase.svg)](https://www.npmjs.com/package/@cnedsson/react-admin-firebase) 
+[![Github Issues](https://img.shields.io/github/issues/charlynedsson/react-admin-firebase.svg)](https://github.com/charlynedsson/react-admin-firebase)
 <!-- [END badges] -->
 
-A firebase data provider for the [React-Admin](https://github.com/marmelab/react-admin) framework. It maps collections from the Firebase database (Firestore) to your react-admin application. It's an [npm package](https://www.npmjs.com/package/react-admin-firebase)!
+Forked and refactored from original [project](https://github.com/benwinding/react-admin-firebase) by [Ben Winding](https://github.com/benwinding).
+
+A firebase data provider for the [React-Admin](https://github.com/marmelab/react-admin) framework. It maps collections from the Firebase database (Firestore) to your react-admin application. It's an [npm package](https://www.npmjs.com/package/@cnedsson/react-admin-firebase)!
 
 ---
 
 ## Features
 - [x] Firestore Dataprovider _(details below)_
 - [x] Firebase AuthProvider (email, password)
-- [x] Login with: Google, Facebook, Github etc... [(Example Here)](https://github.com/benwinding/react-admin-firebase/blob/master/src-demo/src/CustomLoginPage.js)
-- [x] Forgot password button... [(Example Here)](https://github.com/benwinding/react-admin-firebase/blob/master/src-demo/src/CustomForgotPassword.js)
-- [x] Firebase storage upload functionality, with upload monitoring... [(Example Here)](https://github.com/benwinding/react-admin-firebase/blob/master/src-demo/src/EventMonitor.js)
+- [x] Firebase storage upload functionality.
 
 _Pull requests welcome!!_
 
 ## Firestore Dataprovider Features
+- [x] Support react-admin v5
 - [x] Dynamic caching of resources
 - [x] All methods implemented; `(GET, POST, GET_LIST ect...)`
 - [x] Filtering, sorting etc...
@@ -27,42 +28,26 @@ _Pull requests welcome!!_
 - [x] Ability to use externally initialized firebaseApp instance
 - [x] Override firestore random id by using "id" as a field in the Create part of the resource
 - [x] Upload to the firebase storage bucket using the standard `<FileInput />` field
-- [ ] Realtime updates, using ra-realtime
-    - Optional watch collection array or dontwatch collection array
 
 ## Get Started
-`yarn add react-admin-firebase firebase`
-
-or
-
-`npm install --save react-admin-firebase firebase`
-
-## Demos Basic
-A simple example based on the [React Admin Tutorial](https://marmelab.com/react-admin/Tutorial.html).
-
-- [Demo Project (javascript)](https://github.com/benwinding/demo-react-admin-firebase)
-- [Demo Project (typescript)](https://github.com/benwinding/react-admin-firebase-demo-typescript)
-
-### Prerequisits
-- Create a `posts` collection in the firebase firestore database
-- Get config credentials using the dashboard
+`npm install --save @cnedsson/react-admin-firebase firebase`
 
 ## Options
 
-``` javascript
+``` typescript filename="firebaseProvider.ts"
 import {
   FirebaseAuthProvider,
-  FirebaseDataProvider,
-  FirebaseRealTimeSaga
-} from 'react-admin-firebase';
+  FirebaseDataProvider,  
+} from '@cnedsson/react-admin-firebase';
 
 const config = {
   apiKey: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  projectId: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  appId: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
   authDomain: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
   databaseURL: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  projectId: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
   storageBucket: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  messagingSenderId: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  messagingSenderId: "aaaaaaaaaaaaaaaaaaaaaaaaaaa"
 };
 
 // All options are optional
@@ -73,10 +58,6 @@ const options = {
   app: firebaseAppInstance,
   // Enable logging of react-admin-firebase
   logging: true,
-  // Resources to watch for realtime updates, will implicitly watch all resources by default, if not set.
-  watch: ['posts'],
-  // Resources you explicitly dont want realtime updates for
-  dontwatch: ['comments'],
   // Authentication persistence, defaults to 'session', options are 'session' | 'local' | 'none'
   persistence: 'session',
   // Disable the metadata; 'createdate', 'lastupdate', 'createdby', 'updatedby'
@@ -119,103 +100,14 @@ const options = {
 
 const dataProvider = FirebaseDataProvider(config, options);
 const authProvider = FirebaseAuthProvider(config, options);
-const firebaseRealtime = FirebaseRealTimeSaga(dataProvider, options);
+
+export { dataProvider, authProvider };
 ```
 
-## Data Provider
-
-``` javascript
-import * as React from 'react';
-import { Admin, Resource } from 'react-admin';
-
-import { PostList, PostShow, PostCreate, PostEdit } from "./posts";
-import {
-  FirebaseAuthProvider,
-  FirebaseDataProvider,
-  FirebaseRealTimeSaga
-} from 'react-admin-firebase';
-
-const config = {
-  apiKey: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  authDomain: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  databaseURL: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  projectId: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  storageBucket: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  messagingSenderId: "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
-};
-
-const options = {};
-
-const dataProvider = FirebaseDataProvider(config, options);
-...
-      <Admin 
-        dataProvider={dataProvider} 
-      >
-        <Resource name="posts" list={PostList} show={PostShow} create={PostCreate} edit={PostEdit}/>
-      </Admin>
-...
-```
-## Auth Provider
-Using the `FirebaseAuthProvider` you can allow authentication in the application.
-
-``` javascript
-const dataProvider = FirebaseDataProvider(config);
-const authProvider = FirebaseAuthProvider(config);
-...
-      <Admin 
-        dataProvider={dataProvider}
-        authProvider={authProvider}
-      >
-...
-```
-
-Also checkout how to login with: Google, Facebook, Github etc... [(Example Here)](https://github.com/benwinding/react-admin-firebase/blob/master/src-demo/src/CustomLoginPage.js)
-
-And you might want a "Forgot password" button... [(Example Here)](https://github.com/benwinding/react-admin-firebase/blob/master/src-demo/src/CustomForgotPassword.js)
-
-#### Note
+### Authentication status
 To get the currently logged in user run `const user = await authProvider.checkAuth()`, this will return the firebase user object, or null if there is no currently logged in user.
 
-## Realtime Updates!
-
-NOTE: Realtime updates were removed in `react-admin` v3.x (see https://github.com/marmelab/react-admin/pull/3908). As such, `react-admin-firebase` v3.x also does not support Realtime Updates. However, much of the original code used for this functionality in `react-admin` v2.x remains - including the documentation below. For updates on the implementation of realtime please follow these issues:
-- https://github.com/benwinding/react-admin-firebase/issues/49
-- https://github.com/benwinding/react-admin-firebase/issues/57
-
-Get realtime updates from the firebase server instantly on your tables, with minimal overheads, using rxjs observables!
-
-``` javascript
-...
-import {
-  FirebaseRealTimeSaga,
-  FirebaseDataProvider
-} from 'react-admin-firebase';
-...
-const dataProvider = FirebaseDataProvider(config);
-const firebaseRealtime = FirebaseRealTimeSaga(dataProvider);
-...
-      <Admin 
-        dataProvider={dataProvider} 
-        customSagas={[firebaseRealtime]}
-      >
-...
-```
-
-### Realtime Options
-Trigger realtime on only some routes using the options object.
-
-``` javascript
-...
-const dataProvider = FirebaseDataProvider(config);
-const options = {
-  watch: ['posts', 'comments'],
-  dontwatch: ['users']
-}
-const firebaseRealtime = FirebaseRealTimeSaga(dataProvider, options);
-...
-```
-
-## Upload Progress
+### Upload Progress
 
 Monitor file upload data using custom React component which listen for following events (`CustomEvent`):
 
@@ -232,20 +124,29 @@ All events have data passed in `details` key:
 - `fileName`: the file anme
 - `data`: percentage for `FILE_UPLOAD_PROGRESS`
 
-Events are sent to HTML DOM element with id "eventMonitor". See demo implementation for example at [src-demo/src/App.js](src-demo/src/App.js);
+Events are sent to HTML DOM element with id "eventMonitor".
 
-# Help Develop `react-admin-firebase`?
+## Demos Basic
+A simple example based on the [React Admin Tutorial](https://marmelab.com/react-admin/Tutorial.html).
 
-1. `git clone https://github.com/benwinding/react-admin-firebase`
-2. `yarn`
-3. `yarn start-demo`
+- [Demo Project (typescript)](https://github.com/charlynedsson/react-admin-firebase/tree/master/packages/demo)
 
-Now all local changes in the library source code can be tested immediately in the demo app.
+## Run the tests
 
-### Run tests
-To run the tests, either watch for changes or just run all tests.
+Tested using `jest` and `@firebase/rules-unit-testing`. Firebase emulated using `firebase-tools`.
 
-- `yarn test-watch`
-- `yarn test`
+From [workspace root](https://github.com/charlynedsson/react-admin-firebase) run:
+```npm
+npm run start-emulators
+```
 
+In another terminal run:
+```npm
+npm test
+```
+
+## Help Develop `@cnedsson/react-admin-firebase`?
+See how to get started from the [workspace root](https://github.com/charlynedsson/react-admin-firebase).
+
+---
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ben.winding%40gmail.com&item_name=Development&currency_code=AUD&source=url)

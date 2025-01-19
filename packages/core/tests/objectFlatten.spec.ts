@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { objectFlatten, SearchObj } from '../src/misc';
 
 describe('objectFlatten tests', () => {

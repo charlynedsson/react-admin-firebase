@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { parseStoragePath } from '../src/misc';
 
 test('useFileNamesInStorage: false', () => {

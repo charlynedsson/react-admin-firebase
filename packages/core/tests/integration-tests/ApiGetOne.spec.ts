@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { REF_INDENTIFIER } from '../../src/misc';
 import { FireStore } from '../../src/misc/firebase-models';

@@ -1,22 +1,19 @@
 {
   "name": "@cnedsson/react-admin-firebase",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "A firebase data provider for the React Admin framework",
-  "homepage": "https://github.com/benwinding/react-admin-firebase",
+  "homepage": "https://github.com/charlynedsson/react-admin-firebase",
   "license": "MIT",
   "author": "Ben Winding <hello@benwinding.com> (https://github.com/benwinding/react-admin-firebase)",
   "contributors": [
     "Charly Nedsson"
   ],
   "files": [
-    "dist",
-    "src",
-    "LICENSE",
-    "README.md"
+    "dist"
   ],
   "scripts": {
     "build": "del /s /q dist && microbundle",
-    "tsc-test": "tsc -p ./tsconfig.spec.json",
+    "tsc-test": "tsc -p ./tsconfig.json",
     "watch": "microbundle watch",
     "test": "jest --forceExit --detectOpenHandles",
     "tslint": "tslint -p . -c tslint.json 'src/**/*.ts' 'tests/**/*.ts'",
@@ -25,8 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benwinding/react-admin-firebase.git"
+    "url": "git+https://github.com/charlynedsson/react-admin-firebase.git"
   },
+  "keywords": [
+    "react-admin",
+    "firebase"
+  ],
   "dependencies": {
     "lodash": "^4.17.21",
     "path-browserify": "^1.0.1",
@@ -44,17 +45,21 @@
     "ts-jest": "^29.x",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.x",
-    "typescript": "^5.7.3"
+    "typescript": "^5.x"
   },
   "peerDependencies": {
     "firebase": "^11.x",
     "react-admin": "^5.x"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "umd:main": "dist/index.umd.js",
+  "type": "module",
   "source": "src/index.ts",
-  "engines": {
-    "node": ">=10"
-  }
+  "exports": {
+    "types": "./dist/index.d.ts",
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.module.js",
+  "umd:main": "./dist/index.umd.js",
+  "types": "dist/index.d.ts"
 }

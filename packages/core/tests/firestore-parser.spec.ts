@@ -1,4 +1,5 @@
-import firebase from 'firebase/compat';
+import { describe, expect, test } from '@jest/globals';
+import firebase from 'firebase/compat/app';
 import { doc } from 'firebase/firestore';
 import {
   FromFirestoreResult,
